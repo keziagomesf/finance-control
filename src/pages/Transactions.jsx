@@ -140,7 +140,7 @@ const Transactions = () => {
                                 <th className="border p-2 dark:border-gray-600 dark:text-white">Nome</th>
                                 <th className="border p-2 dark:border-gray-600 dark:text-white">Categoria</th>
                                 <th className="border p-2 dark:border-gray-600 dark:text-white">Valor</th>
-                                <th className="border p-2 dark:border-gray-600 dark:text-white">Ação</th>
+                                <th className="border p-2 dark:border-gray-600 dark:text-white">Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
