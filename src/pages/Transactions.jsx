@@ -32,6 +32,9 @@ const Transactions = () => {
     };
 
     const {totalIncome, totalExpense, total} = calculateValues();
+    const handleDelete = (id) => {
+        setTransactions(transactions.filter(transaction => transaction.id !== id));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -130,27 +133,36 @@ const Transactions = () => {
         </div>
 
         <table className="w-full border-collapse border-gray-300 dark:border-gray-800">
-            <thead>
-                <tr className="text-center bg-gray-300 dark:bg-gray-900">
-                    <th className="border p-2 dark:border-gray-600 dark:text-white ">Data</th>
-                    <th className="border p-2 dark:border-gray-600 dark:text-white">Nome da Transação</th>
-                    <th className="border p-2 dark:border-gray-600 dark:text-white">Categoria</th>
-                    <th className="border p-2 dark:border-gray-600 dark:text-white">Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                {transactions.map((transaction) => (
-                    <tr key={transaction.id}>
-                        <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.date}</td>
-                        <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.description}</td>
-                        <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.category}</td>
-                        <td className={`border p-2 dark:border-gray-600 dark:bg-gray-800 ${transaction.type === "income" ? "text-green-500" : "text-red-500"}`}>
-                            R$ {transaction.amount.toFixed(2)}
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+                    <thead>
+                        <tr className="text-center bg-gray-300 dark:bg-gray-900">
+                            <th className="border p-2 dark:border-gray-600 dark:text-white">Data</th>
+                            <th className="border p-2 dark:border-gray-600 dark:text-white">Nome</th>
+                            <th className="border p-2 dark:border-gray-600 dark:text-white">Categoria</th>
+                            <th className="border p-2 dark:border-gray-600 dark:text-white">Valor</th>
+                            <th className="border p-2 dark:border-gray-600 dark:text-white">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {transactions.map((transaction) => (
+                            <tr key={transaction.id} className="text-center">
+                                <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.date}</td>
+                                <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.description}</td>
+                                <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.category}</td>
+                                <td className={`border p-2 dark:border-gray-600 dark:bg-gray-800 ${transaction.type === "income" ? "text-green-500" : "text-red-500"}`}>
+                                    R$ {transaction.amount.toFixed(2)}
+                                </td>
+                                <td className="border p-2 dark:border-gray-600 dark:bg-gray-800">
+                                    <button
+                                        onClick={() => handleDelete(transaction.id)}
+                                        className="bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded-md"
+                                    >
+                                        X
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
     </div>
 </div>
 
