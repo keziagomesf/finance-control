@@ -110,7 +110,9 @@ const Transactions = () => {
 
                 <div className="mb-4">
                     <label className="block text-gray-800 dark:text-gray-200  font-semibold mb-1">Categoria</label>
-                    <select className="w-full p-2 border rounded-md bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400 border-gray-200 dark:border-gray-500">
+                    <select className="w-full p-2 border rounded-md bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400 border-gray-200 dark:border-gray-500"
+                    value={type} 
+                    onChange={(e) => setType(e.target.value)}>
                         <option value="expense">Saída</option>
                         <option value="income">Entrada</option>
                     </select>
@@ -150,8 +152,9 @@ const Transactions = () => {
                                     <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.description}</td>
                                     <td className="border p-2 dark:border-gray-600 dark:text-white dark:bg-gray-800">{transaction.category}</td>
                                     <td className={`border p-2 dark:border-gray-600 dark:bg-gray-800 ${transaction.type === "income" ? "text-green-500" : "text-red-500"}`}>
-                                        R$ {transaction.amount.toFixed(2)}
+                                    R$ {Number(transaction.amount).toFixed(2)}
                                     </td>
+
                                     <td className="border p-2 dark:border-gray-600 dark:bg-gray-800">
                                         <button
                                             onClick={() => handleDelete(transaction.id)}
