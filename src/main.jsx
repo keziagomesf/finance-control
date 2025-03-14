@@ -1,11 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.jsx';
 import Charts from "./pages/Charts";
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AppContext } from './context/AppContext.jsx';
+import { AppProvider } from './context/AppContext.jsx';
 
-const router = createBrowserRouter ([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <App />
@@ -14,9 +16,12 @@ const router = createBrowserRouter ([
     path: "/charts",
     element: <Charts />
   }
-])
+]);
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
-  </StrictMode>,
-)
+    <AppProvider> 
+      <RouterProvider router={router} />
+    </AppProvider>
+  </StrictMode>
+);

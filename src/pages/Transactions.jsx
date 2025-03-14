@@ -1,23 +1,16 @@
 import Input from "../components/Input"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { AppContext } from "../context/AppContext";
+
 
 const Transactions = () => {
-    const [transactions, setTransactions] = useState([
-        { id: 1, type: "income", description: "Salário", category: "Entrada", amount: 5000, date: "2025-03-01" },
-        { id: 2, type: "expense", description: "Aluguel", category: "Saída", amount: -1500, date: "2025-03-05" },
-        { id: 3, type: "income", description: "Freelance", category: "Entrada", amount: 1200, date: "2025-03-10" },
-        { id: 4, type: "expense", description: "Alimentação", category: "Saída", amount: -300, date: "2025-03-12" },
-        { id: 5, type: "expense", description: "Transporte", category: "Saída", amount: -300, date: "2025-03-12" },
-        { id: 6, type: "expense", description: "Lazer", category: "Saída", amount: -500, date: "2025-03-12" },
-        { id: 7, type: "expense", description: "Outros", category: "Saída", amount: -400, date: "2025-03-12" },
-    ]);
-    
-    const [type, setType] = useState("income");
+    const { transactions, setTransactions } = useContext(AppContext);
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
     const [amount, setAmount] = useState("");
     const [date, setDate] = useState("");
-
+    const [type, setType] = useState("income");
+  
     const calculateValues = () => {
         const totalIncome = transactions
             .filter((transaction) => transaction.type === "income")
@@ -38,23 +31,22 @@ const Transactions = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const transactionCategory = category || (type === "income" ? "Entrada" : "Saída");
-    
-        const transactionDate = date || new Date().toLocaleDateString();
     
         const newTransaction = {
           id: transactions.length + 1,
           description,
-          category: transactionCategory,
-          amount: type === "expense" ? -parseFloat(amount) : parseFloat(amount), 
+          category: category || (type === "income" ? "Entrada" : "Saída"),
+          amount: type === "expense" ? -parseFloat(amount) : parseFloat(amount),
           type,
-          date: transactionDate,
+          date: date || new Date().toISOString().split("T")[0], // Data formatada
         };
     
-        setTransactions([...transactions, newTransaction]);
-        setCategory("");
+        setTransactions([...transactions, newTransaction]); // Adiciona ao contexto
+    
+        // Limpar os inputs
         setDescription("");
         setAmount("");
+        setCategory("");
         setDate("");
         setType("income");
       };
